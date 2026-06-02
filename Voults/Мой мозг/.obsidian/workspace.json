@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "a46656981864a58e",
+        "id": "90ce75f972e99f90",
         "type": "tabs",
         "children": [
           {
-            "id": "87a47a8c647c1c30",
+            "id": "849efc91b032832d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Проекты/Визуализация физических процессов.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Новая вкладка"
+              "title": "Визуализация физических процессов"
             }
           }
         ]
@@ -157,13 +161,23 @@
               "icon": "lucide-list",
               "title": "Структура"
             }
+          },
+          {
+            "id": "2c02b26864bb6a28",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,19 +191,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8abb8bdd6397d0f7",
+  "active": "849efc91b032832d",
   "lastOpenFiles": [
+    "Проекты/Без названия.md",
+    "Проекты/Визуализация физических процессов.md",
+    "Проекты/Мир генетики.md",
     "Мои инвестиции/Основной портфель.md",
     "Мои инвестиции/Детский портфель.md",
     "Проекты/!Идеи проектов.md",
     "Мои инвестиции",
-    "Проекты/Визуализация физических процессов.md",
     "Разное/Обслуживание фильтра Барьер Мастер Осмо 50М.md",
     "Наши велосипеды/Давление в шинах велосипеда.md",
     "Разное",
-    "Проекты/Без названия.md",
     "Наши велосипеды",
-    "Проекты/Мир генетики.md",
     "_resources",
     "Здоровье/🏠 Главная.md",
     "Проекты",
