@@ -8,13 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "227c76abf6da296c",
+            "id": "aaa8a498d2c96b41",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Граф"
+              "type": "markdown",
+              "state": {
+                "file": "Шпаргалки/PROMPTS.md — Практическое руководство по использованию OpenCode Go.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "PROMPTS.md — Практическое руководство по использованию OpenCode Go"
             }
           }
         ]
@@ -74,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 560.5
   },
   "right": {
     "id": "6e27e460a098b476",
@@ -176,8 +180,10 @@
       "bases:Создать новую базу": false
     }
   },
-  "active": "227c76abf6da296c",
+  "active": "aaa8a498d2c96b41",
   "lastOpenFiles": [
+    "Шпаргалки/PROMPTS.md — Практическое руководство по использованию OpenCode Go.md",
+    "Шпаргалки",
     "Добро пожаловать.md"
   ]
 }
