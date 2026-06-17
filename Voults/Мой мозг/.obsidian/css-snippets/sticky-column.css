@@ -1,0 +1,49 @@
+/* Sticky first column in tables */
+.markdown-preview-view table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.markdown-preview-view table th:first-child,
+.markdown-preview-view table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--background-primary);
+    min-width: 180px;
+    max-width: 250px;
+}
+
+.markdown-preview-view table th:first-child {
+    background-color: var(--background-secondary);
+    border-right: 2px solid var(--background-modifier-border);
+}
+
+.markdown-preview-view table td:first-child {
+    border-right: 2px solid var(--background-modifier-border);
+}
+
+/* Hover effect for better UX */
+.markdown-preview-view table tr:hover td:first-child {
+    background-color: var(--background-modifier-hover);
+}
+
+/* Ensure proper alignment */
+.markdown-preview-view table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Fixed header when scrolling vertically */
+.markdown-preview-view thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--background-secondary);
+}
+
+/* First column header should be above everything */
+.markdown-preview-view thead th:first-child {
+    z-index: 3;
+}
