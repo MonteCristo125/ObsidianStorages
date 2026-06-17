@@ -1,16 +1,4 @@
-/* Let table overflow its container */
-.markdown-preview-view .markdown-preview-section > div {
-    overflow: visible !important;
-}
-
-/* Table itself */
-.markdown-preview-view table {
-    width: 1400px !important;
+/* Wide table on this page only */
+table[style*="min-width: 1400px"] {
     min-width: 1400px !important;
-    display: table !important;
-}
-
-/* Allow horizontal scroll on the note */
-.markdown-preview-view {
-    overflow-x: auto !important;
 }
