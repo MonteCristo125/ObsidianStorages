@@ -1,3 +1,5 @@
 {
-  "cssSnippets": true
+  "enabledCssSnippets": [
+    "wide-content"
+  ]
 }

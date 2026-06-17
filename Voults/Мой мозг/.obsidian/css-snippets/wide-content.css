@@ -1,28 +1,10 @@
-/* Expand content width in Obsidian */
-.markdown-preview-view {
-    max-width: 95vw;
+/* Only widen tables, keep everything else default */
+table {
+    width: 100% !important;
+    min-width: 1400px !important;
 }
 
-.markdown-preview-view .markdown-preview-section {
-    max-width: 95vw;
-}
-
-/* Also expand in edit mode */
-.markdown-source-view .cm-content {
-    max-width: 95vw;
-}
-
-.markdown-source-view .cm-scroller {
-    max-width: 95vw;
-}
-
-/* Wider tables */
+/* Allow table container to overflow */
 .markdown-preview-view table {
-    width: 100%;
-    min-width: 1200px;
-}
-
-/* Make reading view wider */
-.markdown-preview-view .markdown-preview-section > div {
-    max-width: 95vw;
+    display: table !important;
 }
