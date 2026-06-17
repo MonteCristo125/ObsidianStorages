@@ -1,10 +1,16 @@
-/* Only widen tables, keep everything else default */
-table {
-    width: 100% !important;
-    min-width: 1400px !important;
+/* Let table overflow its container */
+.markdown-preview-view .markdown-preview-section > div {
+    overflow: visible !important;
 }
 
-/* Allow table container to overflow */
+/* Table itself */
 .markdown-preview-view table {
+    width: 1400px !important;
+    min-width: 1400px !important;
     display: table !important;
+}
+
+/* Allow horizontal scroll on the note */
+.markdown-preview-view {
+    overflow-x: auto !important;
 }
