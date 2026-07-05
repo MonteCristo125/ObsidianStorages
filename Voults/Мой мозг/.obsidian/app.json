@@ -1,5 +1,6 @@
 {
   "cssSnippets": true,
   "newFileLocation": "current",
-  "attachmentFolderPath": "_resources"
+  "attachmentFolderPath": "_resources",
+  "readableLineLength": false
 }
