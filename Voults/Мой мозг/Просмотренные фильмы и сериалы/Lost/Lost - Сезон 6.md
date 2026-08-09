@@ -49,6 +49,7 @@ parent: "[[Lost]]"
 Одна из самых душераздирающих сцен сериала. Сан, добравшаяся до острова ради Джина, оказывается запертой в тонущей подлодке. Джин отказывается покидать её.
 
 **Джин:** *"I will never leave you again."*
+> — «Я больше никогда тебя не покину.»
 
 Они тонут вместе. Сан успевает сказать Джину, что любит его. Две руки расходятся под водой.
 
@@ -126,26 +127,32 @@ parent: "[[Lost]]"
 **Джек:** *"Are you real?"*
 
 **Кристиан:** *"I'm real. You're real. Everything that's ever happened to you is real. All those people in the church — they're real, too."*
+> — «Я настоящий. Ты настоящий. Всё, что с тобой когда-либо происходило — реально. Все эти люди в церкви — они тоже настоящие.»
 
 Джек: *"Then... they're all dead?"*
 
 Кристиан: *"Everyone dies sometime, kiddo. Some of them before you, some... long after you."*
+> — «Все умирают когда-нибудь, сынок. Кто-то раньше тебя, кто-то... много позже тебя.»
 
 Джек: *"Then why are they all here now?"*
 
 **Кристиан:** *"Well, there is no 'now' here. This is the place that you all made together so that you could find one another. The most important part of your life was the time that you spent with these people. That's why all of you are here. Nobody does it alone, Jack. You needed all of them, and they needed you."*
+> — «Здесь нет "сейчас". Это место, которое вы создали вместе, чтобы найти друг друга. Самая важная часть твоей жизни — это время, которое ты провёл с этими людьми. Поэтому вы все здесь. Никто не проходит путь в одиночку, Джек. Ты нуждался в каждом из них, и они нуждались в тебе.»
 
 Джек: *"For what?"*
 
 **Кристиан:** *"To remember. And to... let go."*
+> — «Чтобы вспомнить. И... чтобы отпустить.»
 
 Джек: *"Kate... she said we were leaving."*
 
 **Кристиан:** *"Not leaving, no. Moving on."*
+> — «Не уходим. Двигаемся дальше.»
 
 Джек: *"Where are we going?"*
 
 **Кристиан:** *"Let's go find out."*
+> — «Пойдём узнаем.»
 
 Джек обнимает отца. Свет заливает церковь. Все вместе — Джек, Кейт, Сойер, Хёрли, Саид, Чарли, Клэр, Шеннон, Бун, Локк, Либби, Десмонд, Пенни, Джульет, Джин, Сан, Роуз, Бернард — уходят в свет.
 
