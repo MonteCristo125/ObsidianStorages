@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Проекты/CryptoScanner.md",
+                "file": "Шпаргалки/Модели и глубина раздумий по фазам конвейера.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CryptoScanner"
+              "title": "Модели и глубина раздумий по фазам конвейера"
             }
           }
         ]
@@ -195,8 +195,9 @@
   },
   "active": "aaa8a498d2c96b41",
   "lastOpenFiles": [
-    "Шпаргалки/PROMPTS.md — Практическое руководство по использованию OpenCode Go.md",
     "Проекты/CryptoScanner.md",
+    "Шпаргалки/Модели и глубина раздумий по фазам конвейера.md",
+    "Шпаргалки/PROMPTS.md — Практическое руководство по использованию OpenCode Go.md",
     "Шпаргалки",
     "Добро пожаловать.md"
   ]
