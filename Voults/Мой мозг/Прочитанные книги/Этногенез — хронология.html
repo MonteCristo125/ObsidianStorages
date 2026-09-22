@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хронология Этногенеза</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+  }
+  .header p {
+    font-size: 13px;
+    color: #8b949e;
+  }
+
+  .scroll-hint {
+    text-align: center;
+    padding: 12px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    font-size: 13px;
+    color: #8b949e;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .timeline-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 40px 0 60px 0;
+    cursor: grab;
+  }
+  .timeline-container:active { cursor: grabbing; }
+
+  .timeline-container::-webkit-scrollbar {
+    height: 12px;
+  }
+  .timeline-container::-webkit-scrollbar-track {
+    background: #161b22;
+    border-radius: 6px;
+  }
+  .timeline-container::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 6px;
+    border: 2px solid #161b22;
+  }
+  .timeline-container::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+  }
+
+  .timeline {
+    display: flex;
+    align-items: flex-start;
+    min-width: max-content;
+    padding: 0 80px;
+    position: relative;
+  }
+
+  .axis {
+    position: absolute;
+    top: 180px;
+    left: 40px;
+    right: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #30363d 0%, #58a6ff 50%, #30363d 100%);
+    border-radius: 2px;
+  }
+
+  .era {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .era-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #58a6ff;
+    background: #0d1117;
+    padding: 4px 12px;
+    border-radius: 12px;
+    border: 1px solid #1f6feb33;
+    margin-bottom: 20px;
+    white-space: nowrap;
+  }
+
+  .era-events {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+  }
+
+  .event {
+    position: relative;
+    padding: 12px 16px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 180px;
+    max-width: 220px;
+  }
+  .event:hover {
+    border-color: #58a6ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
+  }
+
+  .event-year {
+    font-size: 11px;
+    font-weight: 600;
+    color: #58a6ff;
+    margin-bottom: 4px;
+  }
+
+  .event-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0f6fc;
+    line-height: 1.3;
+  }
+
+  .event-subtitle {
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 2px;
+  }
+
+  .connector {
+    width: 2px;
+    height: 20px;
+    background: #30363d;
+    margin: 0 auto;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 2px solid #0d1117;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Цвета для эр */
+  .era-ancient .era-label { color: #f0883e; border-color: #f0883e33; }
+  .era-ancient .dot { background: #f0883e; }
+  .era-ancient .event { border-left: 3px solid #f0883e; }
+
+  .era-medieval .era-label { color: #a371f7; border-color: #a371f733; }
+  .era-medieval .dot { background: #a371f7; }
+  .era-medieval .event { border-left: 3px solid #a371f7; }
+
+  .era-new .era-label { color: #3fb950; border-color: #3fb95033; }
+  .era-new .dot { background: #3fb950; }
+  .era-new .event { border-left: 3px solid #3fb950; }
+
+  .era-xx .era-label { color: #f85149; border-color: #f8514933; }
+  .era-xx .dot { background: #f85149; }
+  .era-xx .event { border-left: 3px solid #f85149; }
+
+  .era-modern .era-label { color: #58a6ff; border-color: #58a6ff33; }
+  .era-modern .dot { background: #58a6ff; }
+  .era-modern .event { border-left: 3px solid #58a6ff; }
+
+  .era-future .era-label { color: #f778ba; border-color: #f778ba33; }
+  .era-future .dot { background: #f778ba; }
+  .era-future .event { border-left: 3px solid #f778ba; }
+
+  /* Tooltip */
+  .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1c2128;
+    border: 1px solid #444c56;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #c9d1d9;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #444c56;
+  }
+  .event:hover .tooltip { display: block; }
+
+  /* Легенда */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    padding: 16px 32px;
+    background: #161b22;
+    border-top: 1px solid #30363d;
+    position: sticky;
+    bottom: 0;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #8b949e;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Навигация */
+  .nav-buttons {
+    position: fixed;
+    bottom: 60px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #30363d;
+    background: #161b22;
+    color: #c9d1d9;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover {
+    background: #21262d;
+    border-color: #58a6ff;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Хронология Этногенеза — от древности до будущего</h1>
+  <p>Горизонтальная шкала времени. Листайте вправо/влево или используйте колёсико мыши.</p>
+</div>
+
+<div class="scroll-hint">← Листайте горизонтально →</div>
+
+<div class="timeline-container" id="timeline">
+  <div class="timeline">
+    <div class="axis"></div>
+
+    <!-- ДРЕВНОСТЬ -->
+    <div class="era era-ancient">
+      <div class="era-label">Древность</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">~8000 до н.э.</div>
+          <div class="event-title">Дракон. Кн. 1</div>
+          <div class="event-subtitle">Появление тотемов</div>
+          <div class="tooltip">И. Алимов — Наследники Жёлтого Императора. Зарождение артефактов, первый носитель Дракона.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">200 до н.э.</div>
+          <div class="event-title">Дракон. Кн. 2</div>
+          <div class="event-subtitle">Цинь Ши-хуан</div>
+          <div class="tooltip">И. Алимов — Назад в будущее. Китай, эпоха первого императора.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">XII–XIII вв.</div>
+          <div class="event-title">Чингисхан</div>
+          <div class="event-subtitle">Монгольская империя</div>
+          <div class="tooltip">С. Волков — 3 книги. Повелитель страха, Чужие земли, Солдат неудачи. Тотем Волк.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- СРЕДНЕВЕКОВЬЕ -->
+    <div class="era era-medieval">
+      <div class="era-label">Средневековье</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">9 г. н.э.</div>
+          <div class="event-title">Рим</div>
+          <div class="event-subtitle">Легионы просят огня</div>
+          <div class="tooltip">Д. Овчинников — Римская имperia, легионы и заговоры.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1306</div>
+          <div class="event-title">Тамплиеры</div>
+          <div class="event-subtitle">Рыцарь Феникса</div>
+          <div class="tooltip">Ю. Сазонов — Орден тамплиеров, Жак де Моле.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1488–1519</div>
+          <div class="event-title">Тираны</div>
+          <div class="event-subtitle">Эпоха Возрождения</div>
+          <div class="tooltip">Тираны эпохи Возрождения. Интриги, власть,艺术.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1515</div>
+          <div class="event-title">Эльдорадо</div>
+          <div class="event-subtitle">Конкистадоры</div>
+          <div class="tooltip">Поиск золотого города, Новый Свет.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- НОВОЕ ВРЕМЯ -->
+    <div class="era era-new">
+      <div class="era-label">Новое время</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">1756</div>
+          <div class="event-title">Зеркала</div>
+          <div class="event-subtitle">Маскарад, Венеция</div>
+          <div class="tooltip">Д. Колодан — Венеция XVIII века, маскарады и тайны.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1788–1797</div>
+          <div class="event-title">Наполеон</div>
+          <div class="event-subtitle">Путь к славе</div>
+          <div class="tooltip">И. Пронин — Путь Наполеона от корсиканца до императора.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1891–1912</div>
+          <div class="event-title">Революция</div>
+          <div class="event-subtitle">Россия / Япония</div>
+          <div class="tooltip">Ю. Бурносов — Японский городовой, Зона 51. Перекрёсток империй.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1908–1920</div>
+          <div class="event-title">Охотники</div>
+          <div class="event-subtitle">Эпоха революций</div>
+          <div class="tooltip">Охотники в буре революционных событий.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1919–1921</div>
+          <div class="event-title">Бандиты</div>
+          <div class="event-subtitle">Гражданская война</div>
+          <div class="tooltip">Бандитизм и хаос послереволюционной России.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- XX ВЕК -->
+    <div class="era era-xx">
+      <div class="era-label">XX век</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">1942</div>
+          <div class="event-title">Блокада</div>
+          <div class="event-subtitle">Ленинград</div>
+          <div class="tooltip">К. Бенедиктов — 3 книги. Охота на монстра, Взгляд орла, Тень Зигфрида. Лев Гумилёв.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1952–1967</div>
+          <div class="event-title">Че Гевара</div>
+          <div class="event-subtitle">Латинская Америка</div>
+          <div class="tooltip">К. Шаинян — Боливийский дедушка, Невесты Чиморте. Тотем Обезьяна.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1986–1999</div>
+          <div class="event-title">Франкенштейн</div>
+          <div class="event-subtitle">Научные эксперименты</div>
+          <div class="tooltip">Франкенштейновский проект, границы науки и этики.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1991</div>
+          <div class="event-title">Западня</div>
+          <div class="event-subtitle">Распад СССР</div>
+          <div class="tooltip">Конец эпохи. Ловушка перемен.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1991–1999</div>
+          <div class="event-title">Тени</div>
+          <div class="event-subtitle">Современность</div>
+          <div class="tooltip">И. Наумов — Бестиарий. Тени прошлого в настоящем.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">1999</div>
+          <div class="event-title">Цунами</div>
+          <div class="event-subtitle">Конец века</div>
+          <div class="tooltip">Стихия перемен на рубеже тысячелетий.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- СОВРЕМЕННОСТЬ -->
+    <div class="era era-modern">
+      <div class="era-label">Современность</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">2008–2011</div>
+          <div class="event-title">Миллиардер</div>
+          <div class="event-subtitle">Арктика</div>
+          <div class="tooltip">Е. Кондратьева / К. Бенедиктов — 3 книги. Ледовая ловушка, Арктический гамбит, Конец игры. Тотем Орёл.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2009</div>
+          <div class="event-title">Пираты</div>
+          <div class="event-subtitle">Морские приключения</div>
+          <div class="tooltip">Л. Бортникова — Погоня за жужелицей, Охота на дельфина.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2009</div>
+          <div class="event-title">Армагеддон</div>
+          <div class="event-subtitle">Крушение Америки</div>
+          <div class="tooltip">И. Пронин / Ю. Бурносов / К. Бенедиктов — 3 книги.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2010</div>
+          <div class="event-title">Дракон. Кн. 3</div>
+          <div class="event-subtitle">Петербург / Китай</div>
+          <div class="tooltip">И. Алимов — Иногда они возвращаются. Современная линия Дракона.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2011</div>
+          <div class="event-title">Хакеры</div>
+          <div class="event-subtitle">Киберпространство</div>
+          <div class="tooltip">Ш. Врочек / И. Пронин — 3 книги. Последний легат, Бегство сквозь время, Эндшпиль.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2011–2012</div>
+          <div class="event-title">Игра / Ростов</div>
+          <div class="event-subtitle">Финал Этногенеза-1</div>
+          <div class="tooltip">Завершающие книги первой части проекта.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- БУДУЩЕЕ -->
+    <div class="era era-future">
+      <div class="era-label">Будущее</div>
+      <div class="era-events">
+        <div class="event">
+          <div class="event-year">2020-е</div>
+          <div class="event-title">Маруся</div>
+          <div class="event-subtitle">Москва / Шанхай</div>
+          <div class="tooltip">П. Волошина — 3 книги. Талисман бессмертия, Таёжный квест, Конец и вновь начало. Тотем Саламандра. Главная героиня — Маруся Гумилёва.</div>
+        </div>
+        <div class="connector"></div>
+        <div class="dot"></div>
+        <div class="connector"></div>
+        <div class="event">
+          <div class="event-year">2468</div>
+          <div class="event-title">Сомнамбула</div>
+          <div class="event-subtitle">Марс / Солнечная система</div>
+          <div class="tooltip">А. Зорич / С. Волков — 3 книги. Звезда по имени Солнце, Другая сторона Луны, Бегство сквозь время. Тотем Лев. Матвей Гумилёв.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#f0883e"></div> Древность</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a371f7"></div> Средневековье</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div> Новое время</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div> XX век</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div> Современность</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f778ba"></div> Будущее</div>
+</div>
+
+<div class="nav-buttons">
+  <button class="nav-btn" onclick="scrollTimeline(-400)">←</button>
+  <button class="nav-btn" onclick="scrollTimeline(400)">→</button>
+</div>
+
+<script>
+  const container = document.getElementById('timeline');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  container.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+  container.addEventListener('mouseleave', () => isDown = false);
+  container.addEventListener('mouseup', () => isDown = false);
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 2;
+    container.scrollLeft = scrollLeft - walk;
+  });
+
+  // Колёсико мыши → горизонтальная прокрутка
+  container.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      container.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  function scrollTimeline(amount) {
+    container.scrollBy({ left: amount, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
